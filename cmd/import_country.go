@@ -46,7 +46,7 @@ func doRunImportCountry() {
 	defer db.Close()
 
 	// Load up our repositories.
-	cr := repo.NewCountryRepo(db)
+	r := repo.NewCountryRepo(db)
 
 	f, err := os.Open(countryFilePath)
 	if err != nil {
@@ -67,11 +67,11 @@ func doRunImportCountry() {
 			log.Fatal(error)
 		}
 
-		saveCountryRowInDb(cr, line)
+		saveCountryRowInDb(r, line)
 	}
 }
 
-func saveCountryRowInDb(cr *repo.CountryRepo, col []string) {
+func saveCountryRowInDb(r *repo.CountryRepo, col []string) {
 	// Extract the row.
 	idString := col[0]
 	code := col[1]
@@ -85,7 +85,7 @@ func saveCountryRowInDb(cr *repo.CountryRepo, col []string) {
 			Name: name,
 		}
 		ctx := context.Background()
-		err := cr.InsertOrUpdate(ctx, m)
+		err := r.InsertOrUpdate(ctx, m)
 		if err != nil {
 			log.Panic(err)
 		}

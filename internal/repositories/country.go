@@ -1,4 +1,4 @@
-package model_resources
+package repositories
 
 import (
     "context"
@@ -85,14 +85,18 @@ func (r *CountryRepo) GetById(ctx context.Context, id uint64) (*models.Country, 
 	return m, nil
 }
 
-func (cr *CountryRepo) InsertOrUpdate(ctx context.Context, m *models.Country) error {
-    m, err := cr.GetById(ctx, m.Id)
+func (r *CountryRepo) InsertOrUpdate(ctx context.Context, m *models.Country) error {
+    if m.Id == 0 {
+        return r.Insert(ctx, m)
+    }
+
+    m, err := r.GetById(ctx, m.Id)
     if err != nil {
         return err
     }
 
     if m == nil {
-        return cr.Insert(ctx, m)
+        return r.Insert(ctx, m)
     }
-    return cr.Update(ctx, m)
+    return r.Update(ctx, m)
 }

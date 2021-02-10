@@ -15,6 +15,7 @@ var (
 	databaseUser string
 	databasePassword string
 	databaseName string
+	applicationSigningKey string
 )
 
 
@@ -26,6 +27,7 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&databaseUser, "dbUser", os.Getenv("CCDATA_DB_USER"), "The database user.")
 	rootCmd.PersistentFlags().StringVar(&databasePassword, "dbPassword", os.Getenv("CCDATA_DB_PASSWORD"), "The database password.")
 	rootCmd.PersistentFlags().StringVar(&databaseName, "dbName", os.Getenv("CCDATA_DB_NAME"), "The database name.")
+	rootCmd.PersistentFlags().StringVar(&applicationSigningKey, "appSignKey", os.Getenv("CCDATA_APP_SIGNING_KEY"), "The signing key.")
 }
 
 var rootCmd = &cobra.Command{

@@ -5,19 +5,6 @@
 ## Description
 Web-service to access to read-only comic book data written in Golang.
 
-## Pre-Installation
-
-Web-service is powered by the **Grand Comics Database (GDC)** data. To begin, you will need to run the following:
-
-1. Please log into [comics.org](https://www.comics.org/download/) and download latest database.
-2. Import latest database.
-3. Export the following tables as a **CSV** file:
-   * stddata_country
-   * gcd_publisher
-   * gcd_series
-   * gcd_issue
-4. Move csv files to your projects **data/gcd** folder.
-
 ## Installation
 
 1. Begin by cloning the project into your default workspace.
@@ -27,7 +14,7 @@ Web-service is powered by the **Grand Comics Database (GDC)** data. To begin, yo
   git clone https://github.com/LuchaComics/ccdata-server.git
   ```
 
-2. Rn the following in your **postgres** database console:
+2. Run the following in your **postgres** database console:
 
   ```sql
   drop database ccdata_db;
@@ -49,15 +36,50 @@ Web-service is powered by the **Grand Comics Database (GDC)** data. To begin, yo
   export CCDATA_DB_USER=golang
   export CCDATA_DB_PASSWORD=123password
   export CCDATA_DB_NAME=ccdata_db
+  export CCDATA_APP_SIGNING_KEY=lalalalalalalalalalala
   ```
 
-5. Import our dependencies
+5. This web service is powered by the **Grand Comics Database (GDC)** data. To begin, you will need to log into [comics.org](https://www.comics.org/download/) and download latest database.
+
+6. Once file was downloaded, you will need import the latest database into either ``MariaDB`` or ``MySQL``.
+
+7. Export the following tables as a **CSV** file from your database.
+   * stddata_country
+   * gcd_publisher
+   * gcd_series
+   * gcd_issue
+
+8. Move the csv files to your projects **data/gcd** folder. When you finish you should have the following files:
+
+  ```text
+  github.com/luchacomics/ccdata-server/data/gcd/stddata_country
+  github.com/luchacomics/ccdata-server/data/gcd/gcd_publisher
+  github.com/luchacomics/ccdata-server/data/gcd/gcd_series
+  github.com/luchacomics/ccdata-server/data/gcd/gcd_issue
+  ```
+
+9. Import our dependencies
 
   ```bash
   go run main.go import_country -f="./data/gcd/stddata_country.csv"
 
   //TODO: ADD MORE
   ```
+
+## Usage
+
+**TODO: PLEASE FINISH**
+
+
+```
+go run main.go add_user --email="a@a.com" --password="123password" --fname="Bart" --lname="Mika" --state=1
+
+go run main.go genkey --email="a@a.com"
+
+go run main.go lookupkey --apikey=xxx
+
+go run main.go state --email="a@a.com" --state=2
+```
 
 ## License
 This library is licensed under the **AGPLv3 license**. See [LICENSE](LICENSE) for more information. Copyrighted ©2021 [Lucha Comics](https://luchacomics.com/).
