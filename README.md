@@ -79,7 +79,16 @@ go run main.go genkey --email="a@a.com"
 go run main.go lookupkey --apikey=xxx
 
 go run main.go state --email="a@a.com" --state=2
+
+go run main.go serve
 ```
 
 ## License
 This library is licensed under the **AGPLv3 license**. See [LICENSE](LICENSE) for more information. Copyrighted ©2021 [Lucha Comics](https://luchacomics.com/).
+
+
+TODO: Once you serve, you can run the following:
+
+http get 127.0.0.1:5000/api/v1/version
+http get 127.0.0.1:5000/api/v1/version "Authorization:Bearer $CCDATA_APP_ACCESS_TOKEN"
+http get 127.0.0.1:5000/api/v1/countries page_token==0 page_size==250 "Authorization:Bearer $CCDATA_APP_ACCESS_TOKEN"

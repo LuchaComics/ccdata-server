@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"time"
+	"os"
 
 	"github.com/spf13/cobra"
 
@@ -38,7 +39,7 @@ func doRunGenerateAPIKey() {
 	// Load up our database.
 	db, err := utils.ConnectDB(databaseHost, databasePort, databaseUser, databasePassword, databaseName)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("ConnectDB:", err)
 	}
 	defer db.Close()
 
@@ -64,13 +65,20 @@ func doRunGenerateAPIKey() {
 	sm := session.New()
 	err = sm.SaveUser(ctx, user.SessionUuid, user)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("SaveUser:", err)
 	}
 
-    // Generate our
+    // Generate our one-time token
 	accessToken, _, err := utils.GenerateJWTTokenPair(appSignKeyBytes, user.SessionUuid, afterManyYears)
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Println(accessToken, "\n")
+
+	// Save to the user's environment.
+	os.Setenv("CCDATA_APP_ACCESS_TOKEN", accessToken)
+
+	// Output message.
+	fmt.Printf("First run in your console:\n\nexport CCDATA_APP_ACCESS_TOKEN=%s\n\n", accessToken)
+	fmt.Printf("Then run in your console:\n\nhttp get 127.0.0.1:5000/api/v1/version \"Authorization:Bearer $CCDATA_APP_ACCESS_TOKEN\"\n\n")
 }

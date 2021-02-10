@@ -100,3 +100,73 @@ func (r *CountryRepo) InsertOrUpdate(ctx context.Context, m *models.Country) err
     }
     return r.Update(ctx, m)
 }
+
+func (r *CountryRepo) List(ctx context.Context, pageToken uint64, pageSize uint64) ([]*models.Country, uint64) {
+    // Run the go routine for fetching records data.
+    dataCh := make(chan []*models.Country)
+    go func() {
+        data, _ := r.listDataRoutine(ctx, pageToken, pageSize)
+        dataCh <- data
+    }()
+
+    // Run the go routine for fetching records count.
+    countCh := make(chan uint64)
+    go func() {
+        count, _ := r.listCountRoutine(ctx)
+        countCh <- count
+    }()
+
+    // Block function until goroutines finish.
+    dataVal, countVal := <- dataCh, <- countCh
+
+    return dataVal, countVal
+}
+
+
+func (r *CountryRepo) listDataRoutine(ctx context.Context, pageToken uint64, pageSize uint64) ([]*models.Country, error) {
+    ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
+	defer cancel()
+
+	query := "SELECT id, code, name FROM countries WHERE id > $1 ORDER BY id ASC LIMIT $2"
+	rows, err := r.db.QueryContext(ctx, query, pageToken, pageSize)
+	if err != nil {
+		return nil, err
+	}
+
+	var arr []*models.Country
+	defer rows.Close()
+	for rows.Next() {
+		m := new(models.Country)
+		err = rows.Scan(
+            &m.Id,
+    		&m.Code,
+    		&m.Name,
+		)
+		if err != nil {
+			return nil, err
+		}
+		arr = append(arr, m)
+	}
+	err = rows.Err()
+	if err != nil {
+		return nil, err
+	}
+	return arr, err
+}
+
+
+func (r *CountryRepo) listCountRoutine(ctx context.Context) (uint64, error) {
+	ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
+	defer cancel()
+
+	query := `SELECT COUNT(id) FROM countries`
+	var count uint64
+	err := r.db.QueryRowContext(ctx, query).Scan(&count)
+	if err != nil {
+		return 0, err
+	}
+	if err != nil {
+		return 0, err
+	}
+	return count, nil
+}
