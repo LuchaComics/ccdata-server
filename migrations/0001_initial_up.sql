@@ -25,6 +25,11 @@ ON countries (id);
 CREATE UNIQUE INDEX idx_country_name
 ON countries (name);
 
+CREATE TABLE publishers (
+    id BIGINT PRIMARY KEY,
+    name VARCHAR (255) NOT NULL
+);
+
 --TODO: PUBLISHERS
 --TODO: SERIES
 --TODO: ISSUES

@@ -72,6 +72,8 @@ func (h *BaseHandler) AuthorizationMiddleware(fn http.HandlerFunc) http.HandlerF
         if ok && isAuthorized {
             sessionUuid := ctx.Value("session_uuid").(string)
 
+            //TODO: HANDLE CASE WHEN REDIS DB IS CLEARED BUT TOKEN AND USER RECORD ARE VALID.
+
             // Lookup our user profile in the session or return 500 error.
             user, err := h.SessionManager.GetUser(ctx, sessionUuid)
             if err != nil {

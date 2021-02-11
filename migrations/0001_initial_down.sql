@@ -1,2 +1,3 @@
 DROP TABLE users CASCADE;
 DROP TABLE countries CASCADE;
+DROP TABLE publishers CASCADE;
