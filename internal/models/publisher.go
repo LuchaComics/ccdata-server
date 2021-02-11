@@ -28,13 +28,13 @@ type Publisher struct {
 }
 
 type PublisherLite struct {
-    Id uint64
-    Name string
+    Id uint64 `db:"id" json:"id,omitempty"`
+    Name string `db:"name" json:"name,omitempty"`
 }
 
 type PublisherListRequest struct {
-    Count uint64 `json:"count"`
-    Results []*PublisherLite `json:"results"`
+    Count uint64 `json:"count,omitempty"`
+    Results []*PublisherLite `json:"results,omitempty"`
 }
 
 type PublisherRepository interface {

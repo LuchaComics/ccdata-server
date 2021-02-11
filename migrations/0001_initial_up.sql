@@ -47,6 +47,47 @@ CREATE TABLE publishers (
     FOREIGN KEY (country_id) REFERENCES countries(id)
 );
 
+CREATE TABLE series (
+    id BIGINT PRIMARY KEY,
+    name VARCHAR (255) NOT NULL,
+    sort_name VARCHAR(255) NOT NULL,
+    format VARCHAR(255) NOT NULL DEFAULT '',
+    year_began INTEGER NOT NULL,
+    year_began_uncertain BOOLEAN NOT NULL DEFAULT FALSE,
+    year_ended INTEGER DEFAULT NULL,
+    year_ended_uncertain BOOLEAN NOT NULL DEFAULT FALSE,
+    publication_dates VARCHAR(255) NOT NULL DEFAULT '',
+    first_issue_id BIGINT DEFAULT NULL,
+    last_issue_id BIGINT DEFAULT NULL,
+    is_current BOOLEAN NOT NULL DEFAULT FALSE,
+    publisher_id BIGINT NOT NULL,
+    country_id BIGINT NOT NULL,
+    language_id BIGINT NOT NULL,
+    tracking_notes TEXT NOT NULL,
+    notes TEXT NOT NULL,
+    has_gallery BOOLEAN NOT NULL DEFAULT FALSE,
+    issue_count INTEGER NOT NULL,
+    deleted BOOLEAN NOT NULL DEFAULT FALSE,
+    has_indicia_frequency BOOLEAN NOT NULL DEFAULT TRUE,
+    has_isbn BOOLEAN NOT NULL DEFAULT TRUE,
+    has_barcode BOOLEAN NOT NULL DEFAULT TRUE,
+    has_issue_title BOOLEAN NOT NULL DEFAULT FALSE,
+    has_volume BOOLEAN NOT NULL DEFAULT TRUE,
+    is_comics_publication BOOLEAN NOT NULL DEFAULT TRUE,
+    color varchar(255) NOT NULL,
+    dimensions varchar(255) NOT NULL,
+    paper_stock varchar(255) NOT NULL,
+    binding varchar(255) NOT NULL,
+    publishing_format varchar(255) NOT NULL,
+    has_rating BOOLEAN NOT NULL,
+    publication_type_id INTEGER DEFAULT NULL,
+    is_singleton BOOLEAN NOT NULL,
+    has_about_comics BOOLEAN NOT NULL,
+    has_indicia_printer BOOLEAN NOT NULL,
+    FOREIGN KEY (publisher_id) REFERENCES publishers(id),
+    FOREIGN KEY (country_id) REFERENCES countries(id)
+);
+
 --TODO: SERIES
 --TODO: ISSUES
 --TODO: OTHER IF NEED BE
