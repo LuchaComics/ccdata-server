@@ -5,22 +5,26 @@ import (
 )
 
 type Publisher struct {
-    Id uint64
-    Name string
-    // CountryID uint64
-    // YearBegan uint16
-    // YearBeganUncertain uint16
-    // YearEnded uint16
-    // YearEndedUncertain bool
-    // Notes string
-    // URL string
-    // BrandCount uint16
-    // IndiciaPublisherCount uint16
-    // SeriesCount uint16
+    Id uint64 `db:"id" json:"id,omitempty"`
+    Name string `db:"name" json:"name,omitempty"`
+    CountryId uint64 `db:"country_id" json:"country_id,omitempty"`
+    YearBegan int64 `db:"year_began" json:"year_began,omitempty"`
+    YearBeganUncertain bool `db:"year_began_uncertain" json:"year_began_uncertain,omitempty"`
+    YearEnded int64 `db:"year_ended" json:"year_ended,omitempty"`
+    YearEndedUncertain bool `db:"year_ended_uncertain" json:"year_ended_uncertain,omitempty"`
+    Notes string `db:"notes" json:"notes,omitempty"`
+    Url string `db:"url" json:"url,omitempty"`
+    BrandCount int64 `db:"brand_count" json:"brand_count,omitempty"`
+    IndiciaPublisherCount int64 `db:"indicia_publisher_count" json:"indicia_publisher_count,omitempty"`
+    SeriesCount int64 `db:"series_count" json:"series_count,omitempty"`
     // // created
     // // modified
-    // IssueCount uint16
-    // Deleted bool
+    IssueCount int64 `db:"issue_count" json:"issue_count,omitempty"`
+    Deleted bool `db:"deleted" json:"deleted,omitempty"`
+    YearOverallBegan int64 `db:"year_overall_began" json:"year_overall_began,omitempty"`
+    YearOverallBeganUncertain bool `db:"year_overall_began_uncertain" json:"year_overall_began_uncertain,omitempty"`
+    YearOverallEnded int64 `db:"year_overall_ended" json:"year_overall_ended,omitempty"`
+    YearOverallEndedUncertain bool `db:"year_overall_ended_uncertain" json:"year_overall_ended_uncertain,omitempty"`
 }
 
 type PublisherLite struct {

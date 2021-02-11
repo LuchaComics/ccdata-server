@@ -27,10 +27,26 @@ ON countries (name);
 
 CREATE TABLE publishers (
     id BIGINT PRIMARY KEY,
-    name VARCHAR (255) NOT NULL
+    name VARCHAR (255) NOT NULL,
+    country_id BIGINT NOT NULL,
+    year_began INTEGER NULL,
+    year_began_uncertain BOOLEAN NOT NULL,
+    year_ended INTEGER NULL,
+    year_ended_uncertain BOOLEAN NOT NULL,
+    notes TEXT NOT NULL DEFAULT '',
+    url VARCHAR (255) NOT NULL DEFAULT '',
+    brand_count INTEGER NOT NULL DEFAULT 0,
+    indicia_publisher_count INTEGER NOT NULL DEFAULT 0,
+    series_count INTEGER NOT NULL DEFAULT 0,
+    issue_count INTEGER NOT NULL DEFAULT 0,
+    deleted BOOLEAN NOT NULL DEFAULT FALSE,
+    year_overall_began INTEGER DEFAULT NULL,
+    year_overall_began_uncertain BOOLEAN NOT NULL DEFAULT FALSE,
+    year_overall_ended INTEGER DEFAULT NULL,
+    year_overall_ended_uncertain BOOLEAN NOT NULL DEFAULT FALSE,
+    FOREIGN KEY (country_id) REFERENCES countries(id)
 );
 
---TODO: PUBLISHERS
 --TODO: SERIES
 --TODO: ISSUES
 --TODO: OTHER IF NEED BE

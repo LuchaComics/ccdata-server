@@ -55,6 +55,12 @@ func (h *BaseHandler) HandleRequests(w http.ResponseWriter, r *http.Request) {
         } else {
             http.Error(w, "Unauthorized", http.StatusUnauthorized)
         }
+    case n == 2 && p[0] == "publisher" && r.Method == http.MethodGet:
+        if ok && isAuthsorized {
+            h.getPublisher(w, r, p[1])
+        } else {
+            http.Error(w, "Unauthorized", http.StatusUnauthorized)
+        }
     default:
         http.NotFound(w, r)
     }

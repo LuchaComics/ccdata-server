@@ -94,3 +94,4 @@ http get 127.0.0.1:5000/api/v1/version
 http get 127.0.0.1:5000/api/v1/version "Authorization:Bearer $CCDATA_APP_ACCESS_TOKEN"
 http get 127.0.0.1:5000/api/v1/countries page_token==0 page_size==250 "Authorization:Bearer $CCDATA_APP_ACCESS_TOKEN"
 http get 127.0.0.1:5000/api/v1/publishers page_token==0 page_size==250 "Authorization:Bearer $CCDATA_APP_ACCESS_TOKEN"
+http get 127.0.0.1:5000/api/v1/publisher/1 "Authorization:Bearer $CCDATA_APP_ACCESS_TOKEN"
