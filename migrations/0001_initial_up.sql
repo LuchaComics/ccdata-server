@@ -88,6 +88,11 @@ CREATE TABLE series (
     FOREIGN KEY (country_id) REFERENCES countries(id)
 );
 
+CREATE TABLE issues (
+    id BIGINT PRIMARY KEY,
+    number VARCHAR (255) NOT NULL
+);
+
 --TODO: SERIES
 --TODO: ISSUES
 --TODO: OTHER IF NEED BE

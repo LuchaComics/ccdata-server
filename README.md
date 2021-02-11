@@ -64,6 +64,7 @@ Web-service to access to read-only comic book data written in Golang.
   go run main.go import_country -f="./data/gcd/stddata_country.csv"
   go run main.go import_publisher -f="./data/gcd/gcd_publisher.csv"
   go run main.go import_series -f="./data/gcd/gcd_series.csv"
+  go run main.go import_issue -f="./data/gcd/gcd_issue.csv"
 
   //TODO: ADD MORE
   ```
@@ -98,3 +99,5 @@ http get 127.0.0.1:5000/api/v1/publishers page_token==0 page_size==250 "Authoriz
 http get 127.0.0.1:5000/api/v1/publisher/1 "Authorization:Bearer $CCDATA_APP_ACCESS_TOKEN"
 http get 127.0.0.1:5000/api/v1/series page_token==0 page_size==250 "Authorization:Bearer $CCDATA_APP_ACCESS_TOKEN"
 http get 127.0.0.1:5000/api/v1/series/10000 "Authorization:Bearer $CCDATA_APP_ACCESS_TOKEN"
+http get 127.0.0.1:5000/api/v1/issues page_token==0 page_size==250 "Authorization:Bearer $CCDATA_APP_ACCESS_TOKEN"
+http get 127.0.0.1:5000/api/v1/issue/1 "Authorization:Bearer $CCDATA_APP_ACCESS_TOKEN"

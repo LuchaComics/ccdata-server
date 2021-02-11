@@ -13,16 +13,18 @@ type BaseHandler struct {
     CountryRepo *repositories.CountryRepo
     PublisherRepo *repositories.PublisherRepo
     SeriesRepo *repositories.SeriesRepo
+    IssueRepo *repositories.IssueRepo
     SessionManager *session.SessionManager
 }
 
-func NewBaseHandler(keyBin []byte, ur *repositories.UserRepo, cr *repositories.CountryRepo, pr *repositories.PublisherRepo, sr *repositories.SeriesRepo, sm *session.SessionManager) (*BaseHandler) {
+func NewBaseHandler(keyBin []byte, ur *repositories.UserRepo, cr *repositories.CountryRepo, pr *repositories.PublisherRepo, sr *repositories.SeriesRepo, ir *repositories.IssueRepo, sm *session.SessionManager) (*BaseHandler) {
     return &BaseHandler{
         SecretSigningKeyBin: keyBin,
         UserRepo: ur,
         CountryRepo: cr,
         PublisherRepo: pr,
         SeriesRepo: sr,
+        IssueRepo: ir,
         SessionManager: sm,
     }
 }
@@ -72,6 +74,18 @@ func (h *BaseHandler) HandleRequests(w http.ResponseWriter, r *http.Request) {
     case n == 2 && p[0] == "series" && r.Method == http.MethodGet:
         if ok && isAuthsorized {
             h.getSingleSeries(w, r, p[1])
+        } else {
+            http.Error(w, "Unauthorized", http.StatusUnauthorized)
+        }
+    case n == 1 && p[0] == "issues" && r.Method == http.MethodGet:
+        if ok && isAuthsorized {
+            h.getIssues(w, r)
+        } else {
+            http.Error(w, "Unauthorized", http.StatusUnauthorized)
+        }
+    case n == 2 && p[0] == "issue" && r.Method == http.MethodGet:
+        if ok && isAuthsorized {
+            h.getIssue(w, r, p[1])
         } else {
             http.Error(w, "Unauthorized", http.StatusUnauthorized)
         }

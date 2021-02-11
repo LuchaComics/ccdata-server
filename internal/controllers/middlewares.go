@@ -38,8 +38,15 @@ func (h *BaseHandler) JWTProcessorMiddleware(fn http.HandlerFunc) http.HandlerFu
         reqToken := r.Header.Get("Authorization")
 
         if reqToken != "" {
+
             // Special thanks to "poise" via https://stackoverflow.com/a/44700761
             splitToken := strings.Split(reqToken, "Bearer ")
+
+            if len(splitToken) < 2 {
+                http.Error(w, "not properly formatted authorization header", http.StatusBadRequest)
+                return
+            }
+
             reqToken = splitToken[1]
 
             // log.Println(reqToken) // For debugging purposes only.

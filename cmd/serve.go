@@ -48,12 +48,13 @@ func runServeCmd() {
 	cr := repo.NewCountryRepo(db)
 	pr := repo.NewPublisherRepo(db)
 	sr := repo.NewSeriesRepo(db)
+	ir := repo.NewIssueRepo(db)
 
 	// Open up our session handler, powered by redis and let's save the user
 	// account with our ID
 	sm := session.New()
 
-	c := controllers.NewBaseHandler([]byte(applicationSigningKey), ur, cr, pr, sr, sm)
+	c := controllers.NewBaseHandler([]byte(applicationSigningKey), ur, cr, pr, sr, ir, sm)
 
     router := http.NewServeMux()
     router.HandleFunc("/", c.AttachMiddleware(c.HandleRequests))
