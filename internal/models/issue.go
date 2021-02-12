@@ -58,7 +58,8 @@ type IssueListRequest struct {
 type IssueRepository interface {
     Insert(ctx context.Context, c *Issue) error
     Update(ctx context.Context, c *Issue) error
-    GetById(ctx context.Context, id uint64) (Issue, error)
+    GetById(ctx context.Context, id uint64) (*Issue, error)
+    CheckIfExistsById(ctx context.Context, id uint64) (bool, error)
     InsertOrUpdate(ctx context.Context, c *Issue) error
     List(ctx context.Context, page_token uint64, page_size uint64) ([]*IssueLite, uint64)
 }

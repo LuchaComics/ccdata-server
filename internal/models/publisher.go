@@ -40,7 +40,8 @@ type PublisherListRequest struct {
 type PublisherRepository interface {
     Insert(ctx context.Context, c *Publisher) error
     Update(ctx context.Context, c *Publisher) error
-    GetById(ctx context.Context, id uint64) (Publisher, error)
+    GetById(ctx context.Context, id uint64) (*Publisher, error)
+    CheckIfExistsById(ctx context.Context, id uint64) (bool, error)
     InsertOrUpdate(ctx context.Context, c *Publisher) error
     List(ctx context.Context, page_token uint64, page_size uint64) ([]*PublisherLite, uint64)
 }

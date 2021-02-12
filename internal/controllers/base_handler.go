@@ -3,21 +3,22 @@ package controllers
 import (
     "net/http"
 
-    "github.com/luchacomics/ccdata-server/internal/repositories"
+    // "github.com/luchacomics/ccdata-server/internal/repositories"
+    "github.com/luchacomics/ccdata-server/internal/models"
 	"github.com/luchacomics/ccdata-server/internal/session"
 )
 
 type BaseHandler struct {
     SecretSigningKeyBin []byte
-    UserRepo *repositories.UserRepo
-    CountryRepo *repositories.CountryRepo
-    PublisherRepo *repositories.PublisherRepo
-    SeriesRepo *repositories.SeriesRepo
-    IssueRepo *repositories.IssueRepo
+    UserRepo models.UserRepository
+    CountryRepo models.CountryRepository
+    PublisherRepo models.PublisherRepository
+    SeriesRepo models.SeriesRepository
+    IssueRepo models.IssueRepository
     SessionManager *session.SessionManager
 }
 
-func NewBaseHandler(keyBin []byte, ur *repositories.UserRepo, cr *repositories.CountryRepo, pr *repositories.PublisherRepo, sr *repositories.SeriesRepo, ir *repositories.IssueRepo, sm *session.SessionManager) (*BaseHandler) {
+func NewBaseHandler(keyBin []byte, ur models.UserRepository, cr models.CountryRepository, pr models.PublisherRepository, sr models.SeriesRepository, ir models.IssueRepository, sm *session.SessionManager) (*BaseHandler) {
     return &BaseHandler{
         SecretSigningKeyBin: keyBin,
         UserRepo: ur,

@@ -23,5 +23,6 @@ type UserRepository interface {
     Update(ctx context.Context, u *User) error
     GetById(ctx context.Context, id uint64) (*User, error)
     GetByEmail(ctx context.Context, email string) (*User, error)
+    CheckIfExistsById(ctx context.Context, id uint64) (bool, error)
     InsertOrUpdate(ctx context.Context, u *User) error
 }
