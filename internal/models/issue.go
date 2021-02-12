@@ -35,15 +35,16 @@ type Issue struct {
     NoIsbn bool `db:"no_isbn" json:"no_isbn,omitempty"`
     VariantOfId uint64 `db:"variant_of_id" json:"variant_of_id,omitempty"`
     VariantName string `db:"variant_name" json:"variant_name,omitempty"`
-    // Barcode string
-    // NoBarcode bool
-    // Title string
-    // NoTitle bool
-    // OnSaleDate string
-    // OnSaleDateUncertain bool
-    // Rating string
-    // NoRating bool
-    // VolumeNotPrinted bool
+    Barcode string `db:"barcode" json:"barcode,omitempty"`
+    NoBarcode bool `db:"no_barcode" json:"no_barcode,omitempty"`
+    Title string `db:"title" json:"title,omitempty"`
+    NoTitle bool `db:"no_title" json:"no_title,omitempty"`
+    OnSaleDate string `db:"on_sale_date" json:"on_sale_date,omitempty"`
+    OnSaleDateUncertain bool `db:"on_sale_date_uncertain" json:"on_sale_date_uncertain,omitempty"`
+    Rating string `db:"rating" json:"rating,omitempty"`
+    NoRating bool `db:"no_rating" json:"no_rating,omitempty"`
+    VolumeNotPrinted bool `db:"volume_not_printed" json:"volume_not_printed,omitempty"`
+    NoIndiciaPrinter bool `db:"no_indicia_printer" json:"no_indicia_printer,omitempty"`
 }
 
 type IssueLite struct {

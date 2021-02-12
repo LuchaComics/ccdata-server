@@ -103,28 +103,16 @@ func saveIssueRowInDb(r *repo.IssueRepo, col []string) {
     noIsbnString := col[27]
     variantOfIdString := col[28]
     variantName := col[29]
-// 30 barcode
-// 31 no_barcode
-// 32 title
-// 33 no_title
-// 34 on_sale_date
-// 35 on_sale_date_uncertain
-// 36 rating
-// 37 no_rating
-// 38 volume_not_printed
-// 39 no_indicia_printer
-
-	fmt.Println(30, col[30])
-	fmt.Println(31, col[31])
-	fmt.Println(32, col[32])
-	fmt.Println(33, col[33])
-	fmt.Println(34, col[34])
-	fmt.Println(35, col[35])
-	fmt.Println(36, col[36])
-	fmt.Println(37, col[37])
-	fmt.Println(38, col[38])
-	fmt.Println(39, col[39])
-    fmt.Println()
+    barcode := col[30]
+    noBarcodeString := col[31]
+    title := col[32]
+    noTitleString := col[33]
+    onSaleDate := col[34]
+    onSaleDateUncertainString := col[35]
+    rating := col[36]
+    noRatingString := col[37]
+    volumeNotPrintedString := col[38]
+    noIndiciaPrinterString := col[39]
 
 	// Convert the following.
 	id, err := strconv.ParseUint(idString, 10, 64)
@@ -149,6 +137,12 @@ func saveIssueRowInDb(r *repo.IssueRepo, col []string) {
 	validIsbn, _ := strconv.ParseBool(validIsbnString)
 	noIsbn, _ := strconv.ParseBool(noIsbnString)
 	variantOfId, _ := strconv.ParseUint(variantOfIdString, 10, 64)
+	noBarcode, _ := strconv.ParseBool(noBarcodeString)
+	noTitle, _ := strconv.ParseBool(noTitleString)
+	onSaleDateUncertain, _ := strconv.ParseBool(onSaleDateUncertainString)
+    noRating, _ := strconv.ParseBool(noRatingString)
+    volumeNotPrinted, _ := strconv.ParseBool(volumeNotPrintedString)
+    noIndiciaPrinter, _ := strconv.ParseBool(noIndiciaPrinterString)
 
 	if id != 0 {
 		m := &models.Issue{
@@ -180,6 +174,16 @@ func saveIssueRowInDb(r *repo.IssueRepo, col []string) {
 			NoIsbn: noIsbn,
 			VariantOfId: variantOfId,
 			VariantName: variantName,
+			Barcode: barcode,
+			NoBarcode: noBarcode,
+			Title: title,
+			NoTitle: noTitle,
+			OnSaleDate: onSaleDate,
+			OnSaleDateUncertain: onSaleDateUncertain,
+			Rating: rating,
+			NoRating: noRating,
+			VolumeNotPrinted: volumeNotPrinted,
+			NoIndiciaPrinter: noIndiciaPrinter,
 		}
 
 		ctx := context.Background()

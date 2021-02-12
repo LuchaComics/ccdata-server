@@ -32,10 +32,13 @@ func (cr *IssueRepo) Insert(ctx context.Context, m *models.Issue) error {
         publication_date, key_date, sort_code, price, page_count,
         page_count_uncertain, indicia_frequency, no_indicia_frequency,
         editing, no_editing, notes, deleted, is_indexed, isbn, valid_isbn,
-        no_isbn, variant_of_id, variant_name
+        no_isbn, variant_of_id, variant_name, barcode, no_barcode, title,
+        no_title, on_sale_date, on_sale_date_uncertain, rating, no_rating,
+        volume_not_printed, no_indicia_printer
     ) VALUES (
         $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16,
-        $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28
+        $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30,
+        $31, $32, $33, $34, $35, $36, $37, $38
     )
     `
 
@@ -46,7 +49,7 @@ func (cr *IssueRepo) Insert(ctx context.Context, m *models.Issue) error {
 	defer stmt.Close()
     _, err = stmt.ExecContext(
 		ctx,
-		m.Id,
+		m.Id, // 1
 		m.Number,
 		m.Volume,
 		m.NoVolume,
@@ -55,7 +58,7 @@ func (cr *IssueRepo) Insert(ctx context.Context, m *models.Issue) error {
 		m.IndiciaPublisherId,
 		m.IndiciaPubNotPrinted,
 		m.BrandId,
-        m.NoBrand,
+        m.NoBrand, // 10
         m.PublicationDate,
         m.KeyDate,
         m.SortCode,
@@ -65,7 +68,7 @@ func (cr *IssueRepo) Insert(ctx context.Context, m *models.Issue) error {
         m.IndiciaFrequency,
         m.NoIndiciaFrequency,
         m.Editing,
-        m.NoEditing,
+        m.NoEditing, // 20
         m.Notes,
         m.Deleted,
         m.IsIndexed,
@@ -74,6 +77,16 @@ func (cr *IssueRepo) Insert(ctx context.Context, m *models.Issue) error {
         m.NoIsbn,
         m.VariantOfId,
         m.VariantName,
+        m.Barcode,
+        m.NoBarcode, // 30
+        m.Title,
+        m.NoTitle,
+        m.OnSaleDate,
+        m.OnSaleDateUncertain,
+        m.Rating,
+        m.NoRating,
+        m.VolumeNotPrinted,
+        m.NoIndiciaPrinter, // 38
 	)
 	return err
 }
@@ -91,9 +104,12 @@ func (cr *IssueRepo) Update(ctx context.Context, m *models.Issue) error {
         indicia_frequency = $16, no_indicia_frequency = $17, editing = $18,
         no_editing = $19, notes = $20, deleted = $21, is_indexed = $22,
         isbn = $23, valid_isbn = $24, no_isbn = $25, variant_of_id = $26,
-        variant_name = $27
+        variant_name = $27, barcode = $28, no_barcode = $29, title = $30,
+        no_title = $31, on_sale_date = $32, on_sale_date_uncertain = $33,
+        rating = $34, no_rating = $35, volume_not_printed = $36,
+        no_indicia_printer = $37
     WHERE
-        id = $21`
+        id = $38`
 	stmt, err := cr.db.PrepareContext(ctx, query)
 	if err != nil {
 		return err
@@ -129,6 +145,16 @@ func (cr *IssueRepo) Update(ctx context.Context, m *models.Issue) error {
         m.NoIsbn,
         m.VariantOfId,
         m.VariantName,
+        m.Barcode,
+        m.NoBarcode,
+        m.Title,
+        m.NoTitle,
+        m.OnSaleDate,
+        m.OnSaleDateUncertain,
+        m.Rating,
+        m.NoRating,
+        m.VolumeNotPrinted,
+        m.NoIndiciaPrinter,
 		m.Id,
 	)
 	return err
@@ -148,7 +174,9 @@ func (r *IssueRepo) GetById(ctx context.Context, issueId uint64) (*models.Issue,
         publication_date, key_date, sort_code, price, page_count,
         page_count_uncertain, indicia_frequency, no_indicia_frequency,
         editing, no_editing, notes, deleted, is_indexed, isbn, valid_isbn,
-        no_isbn, variant_of_id, variant_name
+        no_isbn, variant_of_id, variant_name, barcode, no_barcode, title,
+        no_title, on_sale_date, on_sale_date_uncertain, rating, no_rating,
+        volume_not_printed, no_indicia_printer
     FROM issues WHERE
         id = $1
     `
@@ -182,6 +210,16 @@ func (r *IssueRepo) GetById(ctx context.Context, issueId uint64) (*models.Issue,
         &m.NoIsbn,
         &m.VariantOfId,
         &m.VariantName,
+        &m.Barcode,
+        &m.NoBarcode,
+        &m.Title,
+        &m.NoTitle,
+        &m.OnSaleDate,
+        &m.OnSaleDateUncertain,
+        &m.Rating,
+        &m.NoRating,
+        &m.VolumeNotPrinted,
+        &m.NoIndiciaPrinter,
 	)
 	if err != nil {
 		// CASE 1 OF 2: Cannot find record with that email.
