@@ -29,9 +29,13 @@ func (cr *IssueRepo) Insert(ctx context.Context, m *models.Issue) error {
     INSERT INTO issues (
         id, number, volume, no_volume, display_volume_with_number, series_id,
         indicia_publisher_id, indicia_pub_not_printed, brand_id, no_brand,
-        publication_date, key_date, sort_code, price
+        publication_date, key_date, sort_code, price, page_count,
+        page_count_uncertain, indicia_frequency, no_indicia_frequency,
+        editing, no_editing, notes, deleted, is_indexed, isbn, valid_isbn,
+        no_isbn, variant_of_id, variant_name
     ) VALUES (
-        $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14
+        $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16,
+        $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28
     )
     `
 
@@ -56,6 +60,20 @@ func (cr *IssueRepo) Insert(ctx context.Context, m *models.Issue) error {
         m.KeyDate,
         m.SortCode,
         m.Price,
+        m.PageCount,
+        m.PageCountUncertain,
+        m.IndiciaFrequency,
+        m.NoIndiciaFrequency,
+        m.Editing,
+        m.NoEditing,
+        m.Notes,
+        m.Deleted,
+        m.IsIndexed,
+        m.Isbn,
+        m.ValidIsbn,
+        m.NoIsbn,
+        m.VariantOfId,
+        m.VariantName,
 	)
 	return err
 }
@@ -69,9 +87,13 @@ func (cr *IssueRepo) Update(ctx context.Context, m *models.Issue) error {
         number = $1, volume = $2, no_volume = $3, display_volume_with_number = $4,
         series_id = $5, indicia_publisher_id = $6, indicia_pub_not_printed = $7,
         brand_id = $8, no_brand = $9, publication_date = $10, key_date = $11,
-        sort_code = $12, price = $13
+        sort_code = $12, price = $13, page_count = $14, page_count_uncertain = $15,
+        indicia_frequency = $16, no_indicia_frequency = $17, editing = $18,
+        no_editing = $19, notes = $20, deleted = $21, is_indexed = $22,
+        isbn = $23, valid_isbn = $24, no_isbn = $25, variant_of_id = $26,
+        variant_name = $27
     WHERE
-        id = $14`
+        id = $21`
 	stmt, err := cr.db.PrepareContext(ctx, query)
 	if err != nil {
 		return err
@@ -93,6 +115,20 @@ func (cr *IssueRepo) Update(ctx context.Context, m *models.Issue) error {
         m.KeyDate,
         m.SortCode,
         m.Price,
+        m.PageCount,
+        m.PageCountUncertain,
+        m.IndiciaFrequency,
+        m.NoIndiciaFrequency,
+        m.Editing,
+        m.NoEditing,
+        m.Notes,
+        m.Deleted,
+        m.IsIndexed,
+        m.Isbn,
+        m.ValidIsbn,
+        m.NoIsbn,
+        m.VariantOfId,
+        m.VariantName,
 		m.Id,
 	)
 	return err
@@ -109,7 +145,10 @@ func (r *IssueRepo) GetById(ctx context.Context, issueId uint64) (*models.Issue,
     SELECT
         id, number, volume, no_volume, display_volume_with_number, series_id,
         indicia_publisher_id, indicia_pub_not_printed, brand_id, no_brand,
-        publication_date, key_date, sort_code, price
+        publication_date, key_date, sort_code, price, page_count,
+        page_count_uncertain, indicia_frequency, no_indicia_frequency,
+        editing, no_editing, notes, deleted, is_indexed, isbn, valid_isbn,
+        no_isbn, variant_of_id, variant_name
     FROM issues WHERE
         id = $1
     `
@@ -129,6 +168,20 @@ func (r *IssueRepo) GetById(ctx context.Context, issueId uint64) (*models.Issue,
         &m.KeyDate,
         &m.SortCode,
         &m.Price,
+        &m.PageCount,
+        &m.PageCountUncertain,
+        &m.IndiciaFrequency,
+        &m.NoIndiciaFrequency,
+        &m.Editing,
+        &m.NoEditing,
+        &m.Notes,
+        &m.Deleted,
+        &m.IsIndexed,
+        &m.Isbn,
+        &m.ValidIsbn,
+        &m.NoIsbn,
+        &m.VariantOfId,
+        &m.VariantName,
 	)
 	if err != nil {
 		// CASE 1 OF 2: Cannot find record with that email.

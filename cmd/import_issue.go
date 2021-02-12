@@ -87,22 +87,22 @@ func saveIssueRowInDb(r *repo.IssueRepo, col []string) {
     keyDate := col[11]
     sortCode := col[12]
     price := col[13]
-// 14 page_count
-// 15 page_count_uncertain
-// 16 indicia_frequency
-// 17 no_indicia_frequency
-// 18 editing
-// 19 no_editing
-// 20 notes
+    pageCount := col[14]
+    pageCountUncertainString := col[15]
+    indiciaFrequency := col[16]
+    noIndiciaFrequencyString := col[17]
+    editing := col[18]
+    noEditingString := col[19]
+    notes := col[20]
 // 21 created
 // 22 modified
-// 23 deleted
-// 24 is_indexed
-// 25 isbn
-// 26 valid_isbn
-// 27 no_isbn
-// 28 variant_of_id
-// 29 variant_name
+    deletedString := col[23]
+    isIndexedString := col[24]
+    isbn := col[25]
+    validIsbnString := col[26]
+    noIsbnString := col[27]
+    variantOfIdString := col[28]
+    variantName := col[29]
 // 30 barcode
 // 31 no_barcode
 // 32 title
@@ -114,22 +114,6 @@ func saveIssueRowInDb(r *repo.IssueRepo, col []string) {
 // 38 volume_not_printed
 // 39 no_indicia_printer
 
-	fmt.Println(14, col[14])
-	fmt.Println(15, col[15])
-	fmt.Println(16, col[16])
-	fmt.Println(17, col[17])
-	fmt.Println(18, col[18])
-	fmt.Println(19, col[19])
-	fmt.Println(20, col[20])
-	fmt.Println(21, col[21])
-	fmt.Println(22, col[22])
-	fmt.Println(23, col[23])
-	fmt.Println(24, col[24])
-	fmt.Println(25, col[25])
-	fmt.Println(26, col[26])
-	fmt.Println(27, col[27])
-	fmt.Println(28, col[28])
-	fmt.Println(29, col[29])
 	fmt.Println(30, col[30])
 	fmt.Println(31, col[31])
 	fmt.Println(32, col[32])
@@ -157,20 +141,14 @@ func saveIssueRowInDb(r *repo.IssueRepo, col []string) {
 	indiciaPubNotPrinted, _ := strconv.ParseBool(indiciaPubNotPrintedString)
 	brandId, _ := strconv.ParseUint(brandIdString, 10, 64)
 	noBrand, _ := strconv.ParseBool(noBrandString)
-
-	// yearBegan, _ := strconv.ParseInt(yearBeganString, 10, 64)
-	// yearBeganUncertain, _ := strconv.ParseBool(yearBeganUncertainString)
-    // volume, _ := strconv.ParseInt(volumeString, 10, 64)
-    // yearEndedUncertain, _ := strconv.ParseBool(yearEndedUncertainString)
-    // brandCount, _ := strconv.ParseInt(brandCountString, 10, 64)
-    // indiciaIssueCount, _ := strconv.ParseInt(indiciaIssueCountString, 10, 64)
-    // seriesCount, _ := strconv.ParseInt(seriesCountString, 10, 64)
-    // issueCount, _ := strconv.ParseInt(issueCountString, 10, 64)
-    // deleted, _ := strconv.ParseBool(deletedString)
-	// yearOverallBegan, _ := strconv.ParseInt(yearOverallBeganString, 10, 64)
-	// yearOverallBeganUncertain, _ := strconv.ParseBool(yearOverallBeganUncertainString)
-    // yearOverallEnded, _ := strconv.ParseInt(yearOverallEndedString, 10, 64)
-    // yearOverallEndedUncertain, _ := strconv.ParseBool(yearOverallEndedUncertainString)
+	pageCountUncertain, _ := strconv.ParseBool(pageCountUncertainString)
+	noEditing, _ := strconv.ParseBool(noEditingString)
+	noIndiciaFrequency, _ := strconv.ParseBool(noIndiciaFrequencyString)
+	deleted, _ := strconv.ParseBool(deletedString)
+	isIndexed, _ := strconv.ParseBool(isIndexedString)
+	validIsbn, _ := strconv.ParseBool(validIsbnString)
+	noIsbn, _ := strconv.ParseBool(noIsbnString)
+	variantOfId, _ := strconv.ParseUint(variantOfIdString, 10, 64)
 
 	if id != 0 {
 		m := &models.Issue{
@@ -188,6 +166,20 @@ func saveIssueRowInDb(r *repo.IssueRepo, col []string) {
 			KeyDate: keyDate,
 			SortCode: sortCode,
 			Price: price,
+			PageCount: pageCount,
+			PageCountUncertain: pageCountUncertain,
+			IndiciaFrequency: indiciaFrequency,
+			NoIndiciaFrequency: noIndiciaFrequency,
+			Editing: editing,
+			NoEditing: noEditing,
+			Notes: notes,
+			Deleted: deleted,
+			IsIndexed: isIndexed,
+			Isbn: isbn,
+			ValidIsbn: validIsbn,
+			NoIsbn: noIsbn,
+			VariantOfId: variantOfId,
+			VariantName: variantName,
 		}
 
 		ctx := context.Background()

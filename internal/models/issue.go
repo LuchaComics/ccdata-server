@@ -13,28 +13,28 @@ type Issue struct {
     SeriesId uint64 `db:"series_id" json:"series_id,omitempty"`
     IndiciaPublisherId uint64 `db:"indicia_publisher_id" json:"indicia_publisher_id,omitempty"`
     IndiciaPubNotPrinted bool `db:"indicia_pub_not_printed" json:"indicia_pub_not_printed,omitempty"`
-    BrandId uint64 `db:"brand_id" json:"brand_id,omitempty"`    
+    BrandId uint64 `db:"brand_id" json:"brand_id,omitempty"`
     NoBrand bool `db:"no_brand" json:"no_brand,omitempty"`
     PublicationDate string `db:"publication_date" json:"publication_date,omitempty"`
     KeyDate string `db:"key_date" json:"key_date,omitempty"`
     SortCode string `db:"sort_code" json:"sort_code,omitempty"`
     Price string `db:"price" json:"price,omitempty"`
-
-    // PageCount string
-    // PageCountUncertain bool
-    // IndiciaFrequency string
-    // NoIndiciaFrequency bool
-    // Editing string
-    // NoEditing bool
-    // Notes string
+    PageCount string `db:"page_count" json:"page_count,omitempty"`
+    PageCountUncertain bool `db:"page_count_uncertain" json:"page_count_uncertain,omitempty"`
+    IndiciaFrequency string `db:"indicia_frequency" json:"indicia_frequency,omitempty"`
+    NoIndiciaFrequency bool `db:"no_indicia_frequency" json:"no_indicia_frequency,omitempty"`
+    Editing string `db:"editing" json:"editing,omitempty"`
+    NoEditing bool `db:"no_editing" json:"no_editing,omitempty"`
+    Notes string `db:"notes" json:"notes,omitempty"`
     // // created
     // // modified
-    // Deleted bool
-    // IsIndexed bool
-    // ISBN string
-    // ValidISBN bool
-    // VariantOfID uint64
-    // VariantName string
+    Deleted bool `db:"deleted" json:"deleted,omitempty"`
+    IsIndexed bool `db:"is_indexed" json:"is_indexed,omitempty"`
+    Isbn string `db:"isbn" json:"isbn,omitempty"`
+    ValidIsbn bool `db:"valid_isbn" json:"valid_isbn,omitempty"`
+    NoIsbn bool `db:"no_isbn" json:"no_isbn,omitempty"`
+    VariantOfId uint64 `db:"variant_of_id" json:"variant_of_id,omitempty"`
+    VariantName string `db:"variant_name" json:"variant_name,omitempty"`
     // Barcode string
     // NoBarcode bool
     // Title string
