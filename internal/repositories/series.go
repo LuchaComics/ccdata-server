@@ -224,17 +224,37 @@ func (r *SeriesRepo) GetById(ctx context.Context, seriesId uint64) (*models.Seri
 	return m, nil
 }
 
+func (r *SeriesRepo) CheckIfExistsById(ctx context.Context, id uint64) (bool, error) {
+	ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
+	defer cancel()
+
+    var exists bool
+
+    query := `SELECT 1 FROM series WHERE id = $1;`
+
+	err := r.db.QueryRowContext(ctx, query, id).Scan(&exists)
+	if err != nil {
+		// CASE 1 OF 2: Cannot find record with that email.
+		if err == sql.ErrNoRows {
+			return false, nil
+		} else { // CASE 2 OF 2: All other errors.
+			return false, err
+		}
+	}
+	return exists, nil
+}
+
 func (r *SeriesRepo) InsertOrUpdate(ctx context.Context, m *models.Series) error {
     if m.Id == 0 {
         return r.Insert(ctx, m)
     }
 
-    found, err := r.GetById(ctx, m.Id)
+    doesExist, err := r.CheckIfExistsById(ctx, m.Id)
     if err != nil {
         return err
     }
 
-    if found == nil {
+    if doesExist == false {
         return r.Insert(ctx, m)
     }
     return r.Update(ctx, m)
