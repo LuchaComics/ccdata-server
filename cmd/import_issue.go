@@ -75,9 +75,72 @@ func saveIssueRowInDb(r *repo.IssueRepo, col []string) {
 	// Extract the row.
 	idString := col[0]
 	number := col[1]
+	volume := col[2]
+	noVolumeString := col[3]
+	displayVolumeWithNumberString := col[4]
+    seriesIdString := col[5]
+	indiciaPublisherIdString := col[6]
+	indiciaPubNotPrintedString := col[7]
+	brandIdString := col[8]
+    noBrandString := col[9]
+    publicationDate := col[10]
+    keyDate := col[11]
+    sortCode := col[12]
+    price := col[13]
+// 14 page_count
+// 15 page_count_uncertain
+// 16 indicia_frequency
+// 17 no_indicia_frequency
+// 18 editing
+// 19 no_editing
+// 20 notes
+// 21 created
+// 22 modified
+// 23 deleted
+// 24 is_indexed
+// 25 isbn
+// 26 valid_isbn
+// 27 no_isbn
+// 28 variant_of_id
+// 29 variant_name
+// 30 barcode
+// 31 no_barcode
+// 32 title
+// 33 no_title
+// 34 on_sale_date
+// 35 on_sale_date_uncertain
+// 36 rating
+// 37 no_rating
+// 38 volume_not_printed
+// 39 no_indicia_printer
 
-	// id	number	volume	no_volume	display_volume_with_number	series_id	indicia_publisher_id	indicia_pub_not_printed	brand_id	no_brand	publication_date	key_date	sort_code	price	page_count	page_count_uncertain	indicia_frequency	no_indicia_frequency	editing	no_editing	notes	created	modified	deleted	is_indexed	isbn	valid_isbn	no_isbn	variant_of_id	variant_name	barcode	no_barcode	title	no_title	on_sale_date	on_sale_date_uncertain	rating	no_rating	volume_not_printed	no_indicia_printer																																							
-
+	fmt.Println(14, col[14])
+	fmt.Println(15, col[15])
+	fmt.Println(16, col[16])
+	fmt.Println(17, col[17])
+	fmt.Println(18, col[18])
+	fmt.Println(19, col[19])
+	fmt.Println(20, col[20])
+	fmt.Println(21, col[21])
+	fmt.Println(22, col[22])
+	fmt.Println(23, col[23])
+	fmt.Println(24, col[24])
+	fmt.Println(25, col[25])
+	fmt.Println(26, col[26])
+	fmt.Println(27, col[27])
+	fmt.Println(28, col[28])
+	fmt.Println(29, col[29])
+	fmt.Println(30, col[30])
+	fmt.Println(31, col[31])
+	fmt.Println(32, col[32])
+	fmt.Println(33, col[33])
+	fmt.Println(34, col[34])
+	fmt.Println(35, col[35])
+	fmt.Println(36, col[36])
+	fmt.Println(37, col[37])
+	fmt.Println(38, col[38])
+	fmt.Println(39, col[39])
+    fmt.Println()
 
 	// Convert the following.
 	id, err := strconv.ParseUint(idString, 10, 64)
@@ -87,10 +150,17 @@ func saveIssueRowInDb(r *repo.IssueRepo, col []string) {
 		}
 	}
 
-	// countryId, _ := strconv.ParseUint(countryIdString, 10, 64)
+    noVolume, _ := strconv.ParseBool(noVolumeString)
+	displayVolumeWithNumber, _ := strconv.ParseBool(displayVolumeWithNumberString)
+	seriesId, _ := strconv.ParseUint(seriesIdString, 10, 64)
+	indiciaPublisherId, _ := strconv.ParseUint(indiciaPublisherIdString, 10, 64)
+	indiciaPubNotPrinted, _ := strconv.ParseBool(indiciaPubNotPrintedString)
+	brandId, _ := strconv.ParseUint(brandIdString, 10, 64)
+	noBrand, _ := strconv.ParseBool(noBrandString)
+
 	// yearBegan, _ := strconv.ParseInt(yearBeganString, 10, 64)
 	// yearBeganUncertain, _ := strconv.ParseBool(yearBeganUncertainString)
-    // yearEnded, _ := strconv.ParseInt(yearEndedString, 10, 64)
+    // volume, _ := strconv.ParseInt(volumeString, 10, 64)
     // yearEndedUncertain, _ := strconv.ParseBool(yearEndedUncertainString)
     // brandCount, _ := strconv.ParseInt(brandCountString, 10, 64)
     // indiciaIssueCount, _ := strconv.ParseInt(indiciaIssueCountString, 10, 64)
@@ -106,12 +176,25 @@ func saveIssueRowInDb(r *repo.IssueRepo, col []string) {
 		m := &models.Issue{
 			Id: id,
 			Number: number,
+			Volume: volume,
+			NoVolume: noVolume,
+			DisplayVolumeWithNumber: displayVolumeWithNumber,
+			SeriesId: seriesId,
+			IndiciaPublisherId: indiciaPublisherId,
+			IndiciaPubNotPrinted: indiciaPubNotPrinted,
+			BrandId: brandId,
+			NoBrand: noBrand,
+			PublicationDate: publicationDate,
+			KeyDate: keyDate,
+			SortCode: sortCode,
+			Price: price,
 		}
 
 		ctx := context.Background()
 		err := r.InsertOrUpdate(ctx, m)
 		if err != nil {
-			log.Panic("InsertOrUpdate | err:", err)
+			fmt.Println("Skipping ID#", id, " b/c err:", err)
+			// panic(err)
 		}
 		fmt.Println("Imported ID#", id)
 	}
