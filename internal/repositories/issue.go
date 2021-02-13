@@ -294,7 +294,7 @@ func (r *IssueRepo) listDataRoutine(ctx context.Context, pageToken uint64, pageS
     ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 
-	query := "SELECT id, number FROM issues WHERE id > $1 ORDER BY id ASC LIMIT $2"
+	query := "SELECT id, number, series_id, indicia_publisher_id FROM issues WHERE id > $1 ORDER BY id ASC LIMIT $2"
 	rows, err := r.db.QueryContext(ctx, query, pageToken, pageSize)
 	if err != nil {
 		return nil, err
@@ -307,6 +307,8 @@ func (r *IssueRepo) listDataRoutine(ctx context.Context, pageToken uint64, pageS
 		err = rows.Scan(
             &m.Id,
             &m.Number,
+            &m.SeriesId,
+            &m.IndiciaPublisherId,
 		)
 		if err != nil {
 			return nil, err

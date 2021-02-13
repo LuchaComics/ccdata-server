@@ -286,7 +286,7 @@ func (r *SeriesRepo) listDataRoutine(ctx context.Context, pageToken uint64, page
     ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 
-	query := "SELECT id, name, sort_name FROM series WHERE id > $1 ORDER BY id ASC LIMIT $2"
+	query := "SELECT id, name, year_began, year_ended, first_issue_id, last_issue_id, publisher_id, country_id, language_id, issue_count FROM series WHERE id > $1 ORDER BY id ASC LIMIT $2"
 	rows, err := r.db.QueryContext(ctx, query, pageToken, pageSize)
 	if err != nil {
 		return nil, err
@@ -299,7 +299,14 @@ func (r *SeriesRepo) listDataRoutine(ctx context.Context, pageToken uint64, page
 		err = rows.Scan(
             &m.Id,
             &m.Name,
-            &m.SortName,
+            &m.YearBegan,
+            &m.YearEnded,
+            &m.FirstIssueId,
+            &m.LastIssueId,
+            &m.PublisherId,
+            &m.CountryId,
+            &m.LanguageId,
+            &m.IssueCount,
 		)
 		if err != nil {
 			return nil, err

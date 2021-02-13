@@ -220,7 +220,7 @@ func (r *PublisherRepo) listDataRoutine(ctx context.Context, pageToken uint64, p
     ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 
-	query := "SELECT id, name FROM publishers WHERE id > $1 ORDER BY id ASC LIMIT $2"
+	query := "SELECT id, name, country_id FROM publishers WHERE id > $1 ORDER BY id ASC LIMIT $2"
 	rows, err := r.db.QueryContext(ctx, query, pageToken, pageSize)
 	if err != nil {
 		return nil, err
@@ -233,6 +233,7 @@ func (r *PublisherRepo) listDataRoutine(ctx context.Context, pageToken uint64, p
 		err = rows.Scan(
             &m.Id,
             &m.Name,
+            &m.CountryId,
 		)
 		if err != nil {
 			return nil, err

@@ -48,7 +48,14 @@ type Series struct {
 type SeriesLite struct {
     Id uint64 `db:"id" json:"id,omitempty"`
     Name string `db:"name" json:"name,omitempty"`
-    SortName string `db:"sort_name" json:"sort_name,omitempty"`
+    YearBegan int64 `db:"year_began" json:"year_began,omitempty`
+    YearEnded int64 `db:"year_ended" json:"year_ended,omitempty"`
+    FirstIssueId uint64 `db:"first_issue_id" json:"first_issue_id,omitempty"`
+    LastIssueId uint64 `db:"last_issue_id" json:"last_issue_id,omitempty"`
+    PublisherId uint64 `db:"publisher_id" json:"publisher_id,omitempty"`
+    CountryId uint64 `db:"country_id" json:"country_id,omitempty"`
+    LanguageId uint64 `db:"language_id" json:"language_id,omitempty"`
+    IssueCount int64 `db:"issue_count" json:"issue_count,omitempty"`    
 }
 
 type SeriesListRequest struct {

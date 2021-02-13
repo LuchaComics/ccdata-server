@@ -30,6 +30,7 @@ type Publisher struct {
 type PublisherLite struct {
     Id uint64 `db:"id" json:"id,omitempty"`
     Name string `db:"name" json:"name,omitempty"`
+    CountryId uint64 `db:"country_id" json:"country_id,omitempty"`
 }
 
 type PublisherListRequest struct {

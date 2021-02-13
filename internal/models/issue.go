@@ -50,7 +50,10 @@ type Issue struct {
 type IssueLite struct {
     Id uint64 `db:"id" json:"id,omitempty"`
     Number string `db:"number" json:"number,omitempty"`
+    SeriesId uint64 `db:"series_id" json:"series_id,omitempty"`
+    IndiciaPublisherId uint64 `db:"indicia_publisher_id" json:"indicia_publisher_id,omitempty"`
 }
+
 
 type IssueListRequest struct {
     Count uint64 `json:"count"`
