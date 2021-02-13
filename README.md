@@ -6,8 +6,7 @@ Web-service to access to read-only comic book data written in Golang.
 
 Please read the [documentation](https://github.com/LuchaComics/ccdata-server/wiki/Developer-Machine-Installation).
 
-## Usage
-The steps are as follows:
+The quick steps are as follows:
 
 1. Clone the project.
 
@@ -19,7 +18,9 @@ The steps are as follows:
 
 3. Set the environmental variables
 
-4. Start the server with the following code
+## Usage
+
+Start the server with the following code
 
     ```bash
     $ go run main.go serve
