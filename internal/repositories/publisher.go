@@ -199,7 +199,7 @@ func (r *PublisherRepo) List(ctx context.Context, pageToken uint64, pageSize uin
     dataCh := make(chan []*models.PublisherLite)
     go func() {
         data, _ := r.listDataRoutine(ctx, pageToken, pageSize)
-        dataCh <- data
+        dataCh <- data[:]
     }()
 
     // Run the go routine for fetching records count.

@@ -126,7 +126,7 @@ func (r *CountryRepo) List(ctx context.Context, pageToken uint64, pageSize uint6
     dataCh := make(chan []*models.Country)
     go func() {
         data, _ := r.listDataRoutine(ctx, pageToken, pageSize)
-        dataCh <- data
+        dataCh <- data[:]
     }()
 
     // Run the go routine for fetching records count.

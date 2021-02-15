@@ -273,7 +273,7 @@ func (r *IssueRepo) List(ctx context.Context, pageToken uint64, pageSize uint64)
     dataCh := make(chan []*models.IssueLite)
     go func() {
         data, _ := r.listDataRoutine(ctx, pageToken, pageSize)
-        dataCh <- data
+        dataCh <- data[:]
     }()
 
     // Run the go routine for fetching records count.
